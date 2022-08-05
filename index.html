@@ -16,27 +16,37 @@ keys:
     original: Filters
     comment: Used as the accessibility text decribing the filter panel region as a whole. Not visible on the page.
   - label: zero_results
-    original: "No results for &quot;[SEARCH_TERM]&quot;"
+    original: "No results for [SEARCH_TERM]"
+    pattern: ".*\\[SEARCH_TERM\\].*"
     comment: >-
-      Shown below the search input when there are no results.
+      Shown below the search input when there are no results.<br/><br/>
+      Must contain <code>[SEARCH_TERM]</code>.
   - label: many_results
-    original: "[COUNT] results for &quot;[SEARCH_TERM]&quot;"
+    original: "[COUNT] results for [SEARCH_TERM]"
+    pattern: ".*\\[COUNT\\].*\\[SEARCH_TERM\\].*|.*\\[SEARCH_TERM\\].*\\[COUNT\\].*"
     comment: >-
       Shown below the search input when there is more than one result.<br/><br/>
-      [COUNT] will use the browser provided Intl.NumberFormat API for language-sensitive number formatting.
+      Must contain <code>[COUNT]</code> and <code>[SEARCH_TERM]</code>.<br/><br/>
+      <code>[COUNT]</code> will use the browser provided Intl.NumberFormat API for language-sensitive number formatting.
   - label: one_result
-    original: "[COUNT] result for &quot;[SEARCH_TERM]&quot;"
+    original: "[COUNT] result for [SEARCH_TERM]"
+    pattern: ".*\\[COUNT\\].*\\[SEARCH_TERM\\].*|.*\\[SEARCH_TERM\\].*\\[COUNT\\].*"
     comment: >-
       Shown below the search input when there is exactly one result.<br/><br/>
-      For consistency with <code>many_results</code>, [COUNT] will use the browser provided Intl.NumberFormat API for language-sensitive number formatting.
+      Must contain <code>[COUNT]</code> and <code>[SEARCH_TERM]</code>.<br/><br/>
+      For consistency with <code>many_results</code>, <code>[COUNT]</code> will use the browser provided Intl.NumberFormat API for language-sensitive number formatting.
   - label: alt_search
-    original: "No results for &quot;[SEARCH_TERM]&quot;. Showing results for &quot;[DIFFERENT_TERM]&quot; instead"
+    original: "No results for [SEARCH_TERM]. Showing results for [DIFFERENT_TERM] instead"
+    pattern: ".*\\[DIFFERENT_TERM\\].*\\[SEARCH_TERM\\].*|.*\\[SEARCH_TERM\\].*\\[DIFFERENT_TERM\\].*"
     comment: >-
-      Shown below the search input when there were no results for the term, but a misspelling was automatically corrected.
+      Shown below the search input when there were no results for the term, but a misspelling was automatically corrected.<br/><br/>
+      Must contain <code>[SEARCH_TERM]</code> and <code>[DIFFERENT_TERM]</code>.
   - label: search_suggestion
-    original: "No results for &quot;[SEARCH_TERM]&quot;. Try one of the following searches:"
+    original: "No results for [SEARCH_TERM]. Try one of the following searches:"
+    pattern: ".*\\[SEARCH_TERM\\].*"
     comment: >-
-      Shown below the search input when there were no results for the term, but some similar words are suggested. The suggested words will be presented as a list of buttons after this sentence.
+      Shown below the search input when there were no results for the term, but some similar words are suggested. The suggested words will be presented as a list of buttons after this sentence.<br/><br/>
+      Must contain <code>[SEARCH_TERM]</code>.
 ---
 
 <!DOCTYPE html>
@@ -95,7 +105,7 @@ keys:
   <br>
   <hr>
   
-  <form action="/thanks">
+  <form action="/thanks" method="POST">
     
     <label for="translator_name">Name (Optional)</label>
     <input type="text" id="translator_name" name="translator_name" placeholder="Name">
@@ -141,6 +151,7 @@ keys:
     id="{{ section.label }}" 
     name="{{ section.label }}"
     placeholder="Translation for &quot;{{ section.original }}&quot;"
+    {% if section.pattern %}pattern="{{ section.pattern }}"{% endif %}
     required>
     {% endfor %}
     
