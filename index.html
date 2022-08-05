@@ -1,0 +1,157 @@
+---
+keys:
+  - label: placeholder
+    original: Search
+    comment: Used as the placeholder text for the search input.
+  - label: clear_search
+    original: Clear
+    comment: Used as the helper message for a button to remove the existing text in the search input.
+  - label: load_more
+    original: Load more results
+    comment: Used as the action text for a button shown below the list of results.
+  - label: search_label
+    original: Search this site
+    comment: Used as the accessibility text decribing the UI widget as a whole. Not visible on the page.
+  - label: filters_label
+    original: Filters
+    comment: Used as the accessibility text decribing the filter panel region as a whole. Not visible on the page.
+  - label: zero_results
+    original: "No results for &quot;[SEARCH_TERM]&quot;"
+    comment: >-
+      Shown below the search input when there are no results.
+  - label: many_results
+    original: "[COUNT] results for &quot;[SEARCH_TERM]&quot;"
+    comment: >-
+      Shown below the search input when there is more than one result.<br/><br/>
+      [COUNT] will use the browser provided Intl.NumberFormat API for language-sensitive number formatting.
+  - label: one_result
+    original: "[COUNT] result for &quot;[SEARCH_TERM]&quot;"
+    comment: >-
+      Shown below the search input when there is exactly one result.<br/><br/>
+      For consistency with <code>many_results</code>, [COUNT] will use the browser provided Intl.NumberFormat API for language-sensitive number formatting.
+  - label: alt_search
+    original: "No results for &quot;[SEARCH_TERM]&quot;. Showing results for &quot;[DIFFERENT_TERM]&quot; instead"
+    comment: >-
+      Shown below the search input when there were no results for the term, but a misspelling was automatically corrected.
+  - label: search_suggestion
+    original: "No results for &quot;[SEARCH_TERM]&quot;. Try one of the following searches:"
+    comment: >-
+      Shown below the search input when there were no results for the term, but some similar words are suggested. The suggested words will be presented as a list of buttons after this sentence.
+---
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagefind Translation Form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+  <style>
+    .quote {
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    hr {
+      margin: 2em 0;
+    }
+    table {
+      display: block;
+      width: 100%;
+      border: solid 2px #ddd;
+      border-radius: 4px;
+    }
+    tbody {
+      display: block;
+      width: 100%;
+    }
+    tr {
+      display: flex;
+      width: 100%;
+    }
+    th {
+      min-width: 120px;
+    }
+    td {
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Translate Pagefind</h1>
+  <p>Thanks for helping to translate Pagefind!</p>
+  <p>Pagefind is a tool to help search static sites, and provides an out-of-the-box search component that can be placed on any website.</p>
+  <p>To provide multilingual support, this UI needs to itself be translated. To see this UI in-situ, see <a target="_blank" href="https://pagefind.app/">The Pagefind Documentation</a> and interact with the search input at the top of the page.</p>
+  
+  <blockquote>
+    For any sample containing square brackets like <code>[SEARCH_TERM]</code>, please retain the square brackets in the translation exactly as they are — though they can be rearranged in the sentence. These tokens are replaced dynamically.
+  </blockquote>
+
+  <br>
+  <hr>
+  
+  <form action="/thanks">
+    
+    <label for="translator_name">Name (Optional)</label>
+    <input type="text" id="translator_name" name="translator_name" placeholder="Name">
+    <label for="translator_email">Email (Optional)</label>
+    <input type="email" id="translator_email" name="translator_email" placeholder="Email">
+    <label for="translator_credit">Would you like to be credited in the Pagefind source if these translations are used?</label>
+    <select name="translator_credit" id="translator_credit">
+      <option value="yes_name">Yes, with my name</option>
+      <option value="yes_full">Yes, with my name and email</option>
+      <option value="no">No, I would like to remain anonymous</option>
+    </select>
+    
+    <hr>
+    
+    <label for="translating_into">What language are you translating Pagefind into?</label>
+    <input type="text" id="translating_into" name="translating_into" placeholder="Language" required>
+    <p>
+      <label for="translation_direction">What is the text direction of the language you are translating into?</label>
+      <select name="translation_direction" id="translation_direction">
+        <option value="ltr">Left to Right</option>
+        <option value="rtl">Right to Left</option>
+      </select>
+    </p>
+    
+    {% for section in keys %}
+    <hr/>
+    <table>
+      <tr>
+        <th>Key</th>
+        <td><label for="{{ section.label }}"><code>{{ section.label }}</code></label></td>
+      </tr>
+      <tr>
+        <th>English</th>
+        <td><span class="quote">{{ section.original }}</span></td>
+      </tr>
+      <tr>
+        <th>Comment</th>
+        <td><i>{{ section.comment }}</i></td>
+      </tr>
+    </table>
+    
+    <input  type="text" 
+    id="{{ section.label }}" 
+    name="{{ section.label }}"
+    placeholder="Translation for &quot;{{ section.original }}&quot;"
+    required>
+    {% endfor %}
+    
+    <hr>
+    
+    <p>
+      <label for="license">I agree to license my contributions under <a target="_blank" href="https://github.com/CloudCannon/pagefind/blob/main/LICENSE">Pagefind's open source license</a></label>
+      <input type="checkbox" name="license" id="license" required>
+    </p>
+    <button>Submit</button>
+  </form>
+</body>
+
+</html>
