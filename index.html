@@ -99,6 +99,10 @@ keys:
   <p>To provide multilingual support, this UI needs to itself be translated. To see this UI in-situ, see <a target="_blank" href="https://pagefind.app/">The Pagefind Documentation</a> and interact with the search input at the top of the page.</p>
   
   <blockquote>
+    If you only want to improve some select translations, feel free to leave the other translations blank.
+  </blockquote>
+
+  <blockquote>
     For any sample containing square brackets like <code>[SEARCH_TERM]</code>, please retain the square brackets in the translation exactly as they are — though they can be rearranged in the sentence. These tokens are replaced dynamically.
   </blockquote>
 
@@ -151,8 +155,7 @@ keys:
     id="{{ section.label }}" 
     name="{{ section.label }}"
     placeholder="Translation for &quot;{{ section.original }}&quot;"
-    {% if section.pattern %}pattern="{{ section.pattern }}"{% endif %}
-    required>
+    {% if section.pattern %}pattern="{{ section.pattern }}"{% endif %}>
     {% endfor %}
     
     <hr>
