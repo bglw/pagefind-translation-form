@@ -47,6 +47,11 @@ keys:
     comment: >-
       Shown below the search input when there were no results for the term, but some similar words are suggested. The suggested words will be presented as a list of buttons after this sentence.<br/><br/>
       Must contain <code>[SEARCH_TERM]</code>.
+  - label: searching
+    original: "Searching for [SEARCH_TERM]..."
+    pattern: ".*\\[SEARCH_TERM\\].*"
+    comment: >-
+      Shown while performing a search, before results have been found.
 ---
 
 <!DOCTYPE html>
